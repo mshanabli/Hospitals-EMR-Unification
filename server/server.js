@@ -1,9 +1,10 @@
 const express = require('express');
 const config = require('config');
 
+require('./startup/logger');
+
 const app = express();
 const port = config.get('port');
-
 const database = require('./startup/database');
 
 (async () => {
