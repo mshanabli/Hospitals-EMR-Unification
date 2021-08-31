@@ -1,10 +1,12 @@
 # Hospitals EMR Unification
 
-**Hospitals EMR Unification** is an application that performs daily extracts of CSV files from the hospitals EMR system, unifies them, and stores them into the DB.
-The daily extracts consist of 2 files:
+**Hospitals EMR Unification** is a demo application that introduces a solution to data diversity of hospitals' EMR systems by performing daily extracts of these records as CSV files, processing them, and storing them in a database.
 
-- **Patient** file that holds general and demographic information about the patients.
-- **Treatment** file that holds all the treatments associated with the patients from the previous file.
+#### Daily extracts consist of 2 files:
 
-**Used Technologies:**
-React, Node, Express, MySQL.
+- **Patients file** - contains general and demographic information about patients.
+- **Treatments file** - contains all treatments associated with patients from the previous file.
+
+#### Used Technologies:
+
+React, Node, Express, MySQL

@@ -5,12 +5,3 @@ npm-debug.log*
 
 # dependencies
 node_modules/
-
-# testing
-coverage/
-
-# production
-build/
-
-# misc
-.env
