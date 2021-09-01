@@ -1,16 +1,18 @@
 const express = require('express');
 const config = require('config');
-
-require('./startup/logger');
+const logger = require('./startup/logger');
+const database = require('./startup/database');
 
 const app = express();
 const port = config.get('port');
-const database = require('./startup/database');
+
+require('./models');
+require('./startup/routes')(app);
 
 (async () => {
   await database.authenticate();
-  console.log('DATABASE: Connection has been established successfully...');
+  logger.info('DATABASE: Connection has been established successfully...');
   await database.sync();
-  console.log('DATABASE: Tables have been created successfully...');
-  app.listen(port, () => console.log(`SERVER: Listening on port ${port}...`));
+  logger.info('DATABASE: Tables have been created successfully...');
+  app.listen(port, () => logger.info(`SERVER: Listening on port ${port}...`));
 })();
