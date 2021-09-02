@@ -1,3 +1,4 @@
 const { Hospital } = require('./hospital');
+const { Column } = require('./column');
 
-module.exports = { Hospital };
+module.exports = { Hospital, Column };
