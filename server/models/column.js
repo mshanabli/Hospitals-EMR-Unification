@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const Joi = require('joi');
 const database = require('../startup/database');
-const { Hospital } = require('./hospital');
 
 const Column = database.define(
   'Column',
@@ -10,13 +9,18 @@ const Column = database.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    type: {
+      type: DataTypes.ENUM('number', 'boolean', 'string', 'date', 'json'),
+      allowNull: false,
+    },
     table: {
       type: DataTypes.ENUM('Patient', 'Treatment'),
       allowNull: false,
     },
-    type: {
-      type: DataTypes.ENUM('Number', 'Boolean', 'String', 'Date', 'Json'),
+    isTarget: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
     value: {
       type: DataTypes.JSON,
@@ -26,29 +30,18 @@ const Column = database.define(
     indexes: [
       {
         unique: true,
-        fields: ['name', 'table', 'hospitalId'],
+        fields: ['name', 'type', 'table', 'isTarget'],
       },
     ],
   }
 );
 
-Hospital.hasMany(Column, {
-  foreignKey: { name: 'hospitalId', allowNull: false },
-  sourceKey: 'id',
-});
-
-Column.belongsTo(Hospital, {
-  foreignKey: { name: 'hospitalId', allowNull: false },
-  targetKey: 'id',
-});
-
 const validate = column => {
   const schema = Joi.object({
     name: Joi.string().required(),
-    table: Joi.string().valid('Patient', 'Treatment').required(),
-    type: Joi.string()
-      .valid('Number', 'Boolean', 'String', 'Date', 'Json')
-      .required(),
+    type: Joi.valid('number', 'boolean', 'string', 'date', 'json').required(),
+    table: Joi.valid('Patient', 'Treatment').required(),
+    isTarget: Joi.boolean(),
     value: Joi.string().custom((value, helpers) => {
       try {
         JSON.parse(value);
@@ -57,9 +50,7 @@ const validate = column => {
       }
       return value;
     }),
-    hospitalId: Joi.number().required(),
   });
-
   return schema.validate(column).error;
 };
 
