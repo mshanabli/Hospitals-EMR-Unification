@@ -4,6 +4,7 @@ const hospital = require('../routes/hospital');
 const column = require('../routes/column');
 const relation = require('../routes/relation');
 const patient = require('../routes/patient');
+const treatment = require('../routes/treatment');
 const error = require('../middleware/error');
 
 require('express-async-errors');
@@ -15,5 +16,6 @@ module.exports = app => {
   app.use('/api/columns', column);
   app.use('/api/relations', relation);
   app.use('/api/patients', patient);
+  app.use('/api/treatments', treatment);
   app.use(error);
 };
