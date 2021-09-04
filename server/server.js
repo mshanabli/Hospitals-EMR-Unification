@@ -7,6 +7,7 @@ const app = express();
 const port = config.get('port');
 
 require('./models');
+require('./startup/directory')();
 require('./startup/routes')(app);
 
 (async () => {
