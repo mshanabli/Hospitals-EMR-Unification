@@ -43,7 +43,7 @@ Column.hasMany(Relation, {
 
 Relation.belongsTo(Column, {
   foreignKey: { name: 'targetId', allowNull: false },
-  sourceKey: 'id',
+  targetKey: 'id',
 });
 
 Hospital.hasMany(Relation, {
@@ -53,7 +53,7 @@ Hospital.hasMany(Relation, {
 
 Relation.belongsTo(Hospital, {
   foreignKey: { name: 'hospitalId', allowNull: false },
-  sourceKey: 'id',
+  targetKey: 'id',
 });
 
 const validate = relation => {

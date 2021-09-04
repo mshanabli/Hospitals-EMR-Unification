@@ -44,7 +44,7 @@ Hospital.hasMany(Patient, {
 
 Patient.belongsTo(Hospital, {
   foreignKey: { name: 'hospitalId', allowNull: false },
-  sourceKey: 'id',
+  targetKey: 'id',
 });
 
 const validate = patient => {
