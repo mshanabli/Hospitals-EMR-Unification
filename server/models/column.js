@@ -22,8 +22,12 @@ const Column = database.define(
       allowNull: false,
       defaultValue: false,
     },
-    value: {
+    values: {
       type: DataTypes.JSON,
+      get() {
+        const data = this.getDataValue('values');
+        return data ? JSON.parse(data) : null;
+      },
     },
   },
   {
@@ -42,7 +46,7 @@ const validate = column => {
     type: Joi.valid('number', 'boolean', 'string', 'date', 'json').required(),
     table: Joi.valid('Patient', 'Treatment').required(),
     isTarget: Joi.boolean(),
-    value: Joi.string().custom((value, helpers) => {
+    values: Joi.string().custom((value, helpers) => {
       try {
         JSON.parse(value);
       } catch (err) {
