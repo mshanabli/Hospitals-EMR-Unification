@@ -10,11 +10,7 @@ const Column = database.define(
       allowNull: false,
     },
     type: {
-      type: DataTypes.ENUM('number', 'boolean', 'string', 'date', 'json'),
-      allowNull: false,
-    },
-    table: {
-      type: DataTypes.ENUM('Patient', 'Treatment'),
+      type: DataTypes.ENUM('number', 'boolean', 'string', 'date'),
       allowNull: false,
     },
     isTarget: {
@@ -34,7 +30,7 @@ const Column = database.define(
     indexes: [
       {
         unique: true,
-        fields: ['name', 'type', 'table', 'isTarget'],
+        fields: ['name', 'type', 'isTarget'],
       },
     ],
   }
@@ -43,8 +39,7 @@ const Column = database.define(
 const validate = column => {
   const schema = Joi.object({
     name: Joi.string().required(),
-    type: Joi.valid('number', 'boolean', 'string', 'date', 'json').required(),
-    table: Joi.valid('Patient', 'Treatment').required(),
+    type: Joi.valid('number', 'boolean', 'string', 'date').required(),
     isTarget: Joi.boolean(),
     values: Joi.string().custom((value, helpers) => {
       try {

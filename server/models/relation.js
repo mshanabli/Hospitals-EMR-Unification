@@ -11,6 +11,10 @@ const Relation = database.define(
       type: DataTypes.ENUM('Direct', 'Map', 'Calc'),
       allowNull: false,
     },
+    table: {
+      type: DataTypes.ENUM('Patient', 'Treatment'),
+      allowNull: false,
+    },
     details: {
       type: DataTypes.JSON,
       get() {
@@ -30,7 +34,7 @@ const Relation = database.define(
     indexes: [
       {
         unique: true,
-        fields: ['targetId', 'hospitalId'],
+        fields: ['table', 'targetId', 'hospitalId'],
       },
     ],
   }
@@ -59,6 +63,7 @@ Relation.belongsTo(Hospital, {
 const validate = relation => {
   const schema = Joi.object({
     type: Joi.valid('Direct', 'Map', 'Calc').required(),
+    table: Joi.valid('Patient', 'Treatment').required(),
     details: Joi.string().custom((value, helpers) => {
       try {
         JSON.parse(value);
