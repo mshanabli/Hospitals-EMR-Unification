@@ -1,12 +1,12 @@
 const { Router } = require('express');
 const {
   addRelation,
-  getRelationsByHospitalId,
+  getRelationsByTableByHospitalId,
 } = require('../controllers/relation');
 
 const router = Router();
 
 router.post('/', addRelation);
-router.get('/:id', getRelationsByHospitalId);
+router.get('/:table/:id', getRelationsByTableByHospitalId);
 
 module.exports = router;
