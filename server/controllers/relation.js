@@ -6,7 +6,7 @@ const addRelation = async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   const sourcesId = JSON.parse(req.body.sourcesId);
-  const { targetId, hospitalId } = req.body;
+  const { table, targetId, hospitalId } = req.body;
 
   const { length } = await Column.findAll({
     where: { id: sourcesId },
@@ -25,7 +25,7 @@ const addRelation = async (req, res) => {
     return res.status(400).send('"hospitalId" contains an invalid value');
 
   const isUnique =
-    (await Relation.count({ where: { targetId, hospitalId } })) === 0;
+    (await Relation.count({ where: { table, targetId, hospitalId } })) === 0;
 
   if (!isUnique) return res.status(400).send('relation already exists');
 
@@ -33,10 +33,10 @@ const addRelation = async (req, res) => {
   res.send(relation);
 };
 
-const getRelationsByHospitalId = async (req, res) => {
-  const { id: hospitalId } = req.params;
-  const relations = await Relation.findAll({ where: { hospitalId } });
+const getRelationsByTableByHospitalId = async (req, res) => {
+  const { table, id: hospitalId } = req.params;
+  const relations = await Relation.findAll({ where: { table, hospitalId } });
   res.send(relations);
 };
 
-module.exports = { addRelation, getRelationsByHospitalId };
+module.exports = { addRelation, getRelationsByTableByHospitalId };
