@@ -14,7 +14,7 @@ export const Input = props => {
         value={value}
         {...rest}
       />
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && <div className="alert alert-danger mt-2 p-2">{error}</div>}
     </div>
   );
 };
